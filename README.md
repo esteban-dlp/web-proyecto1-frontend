@@ -224,8 +224,8 @@ Sí volvería a usar JavaScript vanilla para proyectos pequeños o tareas donde 
 ## 🔗 Relacionado
 
 * 🧠 Repositorio del backend: [web-proyecto1-frontend](https://github.com/esteban-dlp/web-proyecto1-backend.git)
-* 📡 API del backend: *[agregar enlace]*
-* 📘 Documentación Swagger: *[agregar enlace]/api-docs*
+* 📡 API del backend: [api-backend](https://web-proyecto1-backend.onrender.com/)
+* 📘 Documentación Swagger: [api-swagger](https://web-proyecto1-backend.onrender.com/api-docs)
 
 ---
 
