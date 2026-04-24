@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Series Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-text">
+        <h1 class="header-title">Series Tracker</h1>
+        <p class="header-subtitle">Track, rate, and manage your favorite TV series.</p>
+      </div>
+      <button id="btn-toggle-form" class="btn btn-primary" aria-expanded="false">
+        + Add Series
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ FORM PANEL ════════════════════════════════════════════════════════ -->
+  <section id="form-panel" class="form-panel hidden" aria-label="Series form">
+    <div class="form-container">
+      <div class="form-header">
+        <h2 id="form-title">Add New Series</h2>
+        <button id="btn-close-form" class="btn-icon" aria-label="Close form">✕</button>
+      </div>
+
+      <form id="series-form" novalidate>
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="field-title">Title <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="field-title"
+              name="title"
+              placeholder="Breaking Bad"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="field-genre">Genre <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="field-genre"
+              name="genre"
+              placeholder="Drama, Crime..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="field-status">Status <span class="required" aria-hidden="true">*</span></label>
+            <select id="field-status" name="status">
+              <option value="">-- Select status --</option>
+              <option value="watching">Watching</option>
+              <option value="completed">Completed</option>
+              <option value="planned">Planned</option>
+              <option value="dropped">Dropped</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="field-rating">Rating <span class="label-hint">(0 – 10)</span></label>
+            <input
+              type="number"
+              id="field-rating"
+              name="rating"
+              min="0"
+              max="10"
+              step="0.1"
+              placeholder="8.5"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="field-release-year">Release Year</label>
+            <input
+              type="number"
+              id="field-release-year"
+              name="release_year"
+              min="1900"
+              max="2100"
+              placeholder="2008"
+            />
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="field-image-url">Image URL <span class="label-hint">(poster)</span></label>
+            <input
+              type="url"
+              id="field-image-url"
+              name="image_url"
+              placeholder="https://example.com/poster.jpg"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="field-description">Description</label>
+            <textarea
+              id="field-description"
+              name="description"
+              rows="3"
+              placeholder="A brief description of the series..."
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div id="form-error" class="form-error hidden" role="alert" aria-live="polite"></div>
+
+        <div class="form-actions">
+          <button type="submit" id="btn-submit" class="btn btn-primary">Add Series</button>
+          <button type="button" id="btn-cancel-edit" class="btn btn-ghost hidden">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══ CONTROLS ══════════════════════════════════════════════════════════ -->
+  <section class="controls" aria-label="Search and filter">
+    <div class="controls-inner">
+
+      <div class="search-wrapper">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Search by title..."
+          aria-label="Search series by title"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filter-row">
+        <select id="filter-status" class="control-select" aria-label="Filter by status">
+          <option value="">All Statuses</option>
+          <option value="watching">Watching</option>
+          <option value="completed">Completed</option>
+          <option value="planned">Planned</option>
+          <option value="dropped">Dropped</option>
+        </select>
+
+        <input
+          type="text"
+          id="filter-genre"
+          class="control-input"
+          placeholder="Filter by genre..."
+          aria-label="Filter by genre"
+          autocomplete="off"
+        />
+
+        <select id="sort-select" class="control-select" aria-label="Sort series">
+          <option value="created_at|desc">Newest First</option>
+          <option value="rating|desc">Rating: High to Low</option>
+          <option value="rating|asc">Rating: Low to High</option>
+          <option value="title|asc">Title: A – Z</option>
+          <option value="release_year|desc">Release Year</option>
+        </select>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+    <div id="status-message" class="status-message hidden" role="status" aria-live="polite"></div>
+    <div id="series-grid" class="series-grid" aria-label="Series list"></div>
+    <nav id="pagination" class="pagination" aria-label="Pagination"></nav>
+  </main>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p>Series Tracker &mdash; Built with vanilla HTML, CSS &amp; JavaScript</p>
+  </footer>
+
+  <!-- Toast notification container (injected by JS) -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
