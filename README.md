@@ -85,19 +85,45 @@ npx serve frontend -l 5500
 
 ## ⚙️ Configuración de la API
 
-La URL base de la API se define en el archivo **`config.js`**:
+La URL base del backend se configura en el archivo **`config.js`**. Este archivo centraliza la conexión entre el frontend y la API REST.
 
-```js id="d8wpib"
-const API_BASE_URL = "http://localhost:3000";
+Actualmente, el proyecto está configurado para consumir el backend desplegado en Render:
+
+```js
+const API_BASE_URL = "https://web-proyecto1-backend.onrender.com";
 ```
+
+Esto permite que el frontend desplegado en Render funcione directamente sin configurar variables adicionales.
 
 ### Desarrollo local
 
-Para desarrollo local, se puede dejar el valor por defecto:
+Si se desea probar el proyecto localmente con el backend corriendo en la computadora, se debe cambiar temporalmente el valor de `API_BASE_URL` en `config.js`:
 
-```txt id="cqit3f"
+```js
+const API_BASE_URL = "http://localhost:3000";
+```
+
+Luego, el backend debe estar ejecutándose en:
+
+```txt
 http://localhost:3000
 ```
+
+### Producción en Render
+
+Para producción, `config.js` debe apuntar a la URL pública del backend desplegado en Render:
+
+```js
+const API_BASE_URL = "https://web-proyecto1-backend.onrender.com";
+```
+
+Si se despliega el backend con otro nombre o en otro servicio, solo se debe reemplazar esta URL por la URL correspondiente.
+
+> [!NOTE]
+> No se debe abrir el archivo `index.html` directamente como `file:///`, porque eso puede provocar errores de CORS.
+> El frontend debe abrirse usando Live Server, Python HTTP Server, `serve` o el deploy de Render.
+
+---
 
 ### Producción en Render
 
@@ -226,6 +252,7 @@ Sí volvería a usar JavaScript vanilla para proyectos pequeños o tareas donde 
 * 🧠 Repositorio del backend: [web-proyecto1-frontend](https://github.com/esteban-dlp/web-proyecto1-backend.git)
 * 📡 API del backend: [api-backend](https://web-proyecto1-backend.onrender.com/)
 * 📘 Documentación Swagger: [api-swagger](https://web-proyecto1-backend.onrender.com/api-docs)
+* 🚀 Deploy del frontend: [frontend-url](https://web-proyecto1-frontend.onrender.com/)
 
 ---
 
